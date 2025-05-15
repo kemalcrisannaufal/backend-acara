@@ -28,6 +28,16 @@ const doc = {
         identifier: "kemalcr",
         password: "12345678",
       },
+      RegisterRequest: {
+        fullname: "Squidward Spongebob",
+        username: "squidbob",
+        email: "squidbob@yopmail.com",
+        password: "12345678",
+        confirmPassword: "12345678",
+      },
+      ActivationRequest: {
+        code: "abcdef",
+      },
     },
   },
 };
