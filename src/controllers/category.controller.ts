@@ -2,6 +2,7 @@ import { IPaginationQuery, IReqUser } from "../utils/interfaces";
 import { Response } from "express";
 import CategoryModel, { categoryDAO } from "../models/category.model";
 import response from "../utils/response";
+import { FilterQuery } from "mongoose";
 
 export default {
   async create(req: IReqUser, res: Response) {
@@ -14,12 +15,12 @@ export default {
     }
   },
   async findAll(req: IReqUser, res: Response) {
-    const {
-      page = 1,
-      limit = 10,
-      search,
-    } = req.query as unknown as IPaginationQuery;
     try {
+      const {
+        page = 1,
+        limit = 10,
+        search,
+      } = req.query as unknown as IPaginationQuery;
       const query = {};
       if (search) {
         Object.assign(query, {
@@ -71,7 +72,9 @@ export default {
   async remove(req: IReqUser, res: Response) {
     try {
       const { id } = req.params;
-      const result = await CategoryModel.findByIdAndDelete(id);
+      const result = await CategoryModel.findByIdAndDelete(id, {
+        new: true,
+      });
       response.success(res, result, "Success remove category");
     } catch (error) {
       response.error(res, error, "Failed remove category");

@@ -57,17 +57,7 @@ const loginValidateSchema = Yup.object({
 });
 
 export default {
-  /**
-   #swagger.tags = ['Auth']
-   */
   async register(req: Request, res: Response) {
-    /**
-     #swagger.tags = ['Auth']
-     #swagger.requestBody = {
-      required:true,
-      schema: {$ref: "#/components/schemas/RegisterRequest" }
-     }
-     */
     const { fullname, username, email, password, confirmPassword } =
       req.body as unknown as TRegister;
 
@@ -94,14 +84,6 @@ export default {
   },
 
   async login(req: Request, res: Response) {
-    /**
-     #swagger.tags = ['Auth']
-     #swagger.requestBody={
-      required:true,
-      schema: {$ref: "#/components/schemas/LoginRequest" }
-    }
-    */
-
     const { identifier, password } = req.body as unknown as TLogin;
     try {
       await loginValidateSchema.validate({ identifier, password });
@@ -143,10 +125,6 @@ export default {
   },
 
   async me(req: IReqUser, res: Response) {
-    /**
-     #swagger.tags = ['Auth']
-     #swagger.security=[{ "bearerAuth": [] }]
-     */
     try {
       const user = req.user;
       const result = await UserModel.findById(user?.id);
@@ -157,14 +135,6 @@ export default {
   },
 
   async activation(req: Request, res: Response) {
-    /**
-     #swagger.tags = ['Auth']
-     #swagger.requestBody={
-       required:true,
-       schema: {$ref: "#/components/schemas/ActivationRequest"}
-
-     }
-     */
     try {
       const { code } = req.body as { code: string };
 
