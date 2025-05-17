@@ -1,35 +1,34 @@
 import { Response } from "express";
 import { IReqUser } from "../utils/interfaces";
 import uploader from "../utils/uploader";
+import response from "../utils/response";
 
 export default {
   async single(req: IReqUser, res: Response) {
     if (!req.file) {
-      return res.status(400).json({ message: "File is not found", data: null });
+      return response.error(res, null, "File is not found");
     }
     try {
       const result = await uploader.uploadSingle(
         req.file as Express.Multer.File
       );
-      res.status(200).json({ message: "Success upload file", data: result });
+      response.success(res, result, "Success upload file");
     } catch {
-      res.status(400).json({ message: "Failed upload file", data: null });
+      response.error(res, null, "Failed upload file");
     }
   },
 
   async multiple(req: IReqUser, res: Response) {
     if (!req.files || req.files.length === 0) {
-      return res
-        .status(400)
-        .json({ message: "Files are not found", data: null });
+      response.error(res, null, "Files are not found");
     }
     try {
       const result = await uploader.uploadMultiple(
         req.files as Express.Multer.File[]
       );
-      res.status(200).json({ message: "Success upload files", data: result });
+      response.success(res, result, "Success upload files");
     } catch {
-      res.status(400).json({ message: "Failed upload files", data: null });
+      response.error(res, null, "Failed upload files");
     }
   },
 
@@ -37,9 +36,9 @@ export default {
     try {
       const { fileUrl } = req.body as { fileUrl: string };
       const result = await uploader.remove(fileUrl);
-      res.status(200).json({ message: "Success remove file", data: result });
+      response.success(res, result, "Success remove file");
     } catch {
-      res.status(400).json({ message: "Failed remove file", data: null });
+      response.error(res, null, "Failed remove file");
     }
   },
 };
