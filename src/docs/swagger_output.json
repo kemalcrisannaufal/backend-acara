@@ -423,12 +423,12 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateEventsRequest"
+                "$ref": "#/components/schemas/CreateEventRequest"
               }
             },
             "application/xml": {
               "schema": {
-                "$ref": "#/components/schemas/CreateEventsRequest"
+                "$ref": "#/components/schemas/CreateEventRequest"
               }
             }
           }
@@ -830,6 +830,10 @@
                 "items": {
                   "type": "number"
                 }
+              },
+              "address": {
+                "type": "string",
+                "example": ""
               }
             }
           }

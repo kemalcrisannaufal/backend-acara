@@ -17,7 +17,11 @@ export const eventDAO = Yup.object({
   createdBy: Yup.string().required(),
   createdAt: Yup.string(),
   updatedAt: Yup.string(),
-  location: Yup.object().required(),
+  location: Yup.object({
+    region: Yup.number().required(),
+    coordinates: Yup.array(Yup.number()),
+    address: Yup.string(),
+  }).required(),
 });
 
 export type TEvent = Yup.InferType<typeof eventDAO>;
@@ -90,12 +94,15 @@ const EventSchema = new Schema<Event>(
           type: [Schema.Types.Number],
           default: [0, 0],
         },
+        address: {
+          type: Schema.Types.String,
+        },
       },
       required: true,
     },
   },
   { timestamps: true }
-);
+).index({ name: "text" });
 
 EventSchema.pre("save", function () {
   if (!this.slug) {

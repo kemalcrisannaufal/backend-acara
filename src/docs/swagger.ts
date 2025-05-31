@@ -57,6 +57,7 @@ const doc = {
         location: {
           region: "region id",
           coordinates: [0, 0],
+          address: "",
         },
       },
       CreateMediaRequest: {
