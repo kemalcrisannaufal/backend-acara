@@ -112,7 +112,7 @@ export default {
     }
   },
 
-  async findOneByEvent(req: IReqUser, res: Response) {
+  async findTicketsByEvent(req: IReqUser, res: Response) {
     try {
       const { event } = req.params;
       if (!isValidObjectId(event)) {
@@ -121,7 +121,8 @@ export default {
           "Failed to get one ticket by event. Id is not valid"
         );
       }
-      const result = await TicketModel.findOne({ event });
+
+      const result = await TicketModel.find({ event });
       if (!result) {
         return response.notFound(
           res,

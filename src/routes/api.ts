@@ -354,7 +354,7 @@ router.delete(
 );
 router.get(
   "/tickets/:event/event",
-  ticketController.findOneByEvent
+  ticketController.findTicketsByEvent
   /**
     #swagger.tags = ['Tickets']
   */
