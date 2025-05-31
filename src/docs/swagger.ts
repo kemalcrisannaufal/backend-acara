@@ -60,6 +60,13 @@ const doc = {
           address: "",
         },
       },
+      CreateTicketsRequest: {
+        price: 1500,
+        name: "Ticket Reguler",
+        event : "events_id",
+        description: "Ticket Reguler - Description",
+        quantity: 100,
+      },
       CreateMediaRequest: {
         fileUrl: "",
       },
