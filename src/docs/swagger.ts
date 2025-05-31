@@ -43,6 +43,12 @@ const doc = {
         description: "Mongodb ",
         icon: "",
       },
+      CreateBannerRequest: {
+        title: "Banner 3 - Title",
+        image:
+          "https://res.cloudinary.com/djxvhhj4i/image/upload/v1748579034/n13vhahqcevspnaruss3.jpg",
+        isShow: false,
+      },
       CreateEventRequest: {
         name: "",
         startDate: "yyyy-MM-dd HH:mm:ss",
@@ -63,7 +69,7 @@ const doc = {
       CreateTicketsRequest: {
         price: 1500,
         name: "Ticket Reguler",
-        event : "events_id",
+        event: "events_id",
         description: "Ticket Reguler - Description",
         quantity: 100,
       },

@@ -9,6 +9,7 @@ import categoryController from "../controllers/category.controller";
 import regionController from "../controllers/region.controller";
 import eventController from "../controllers/event.controller";
 import ticketController from "../controllers/ticket.controller";
+import bannerController from "../controllers/banner.controller";
 
 const router = express.Router();
 
@@ -159,6 +160,67 @@ router.get(
   regionController.findByCity
   /**
     #swagger.tags = ['Regions'] 
+  */
+);
+
+// Banner
+router.post(
+  "/banners",
+  [authMiddleware, aclMiddleware([ROLES.ADMIN])],
+  bannerController.create
+  /**
+    #swagger.tags = ['Banners']
+    #swagger.security = [{
+      "bearerAuth": []
+    }]
+    #swagger.requestBody = {
+    required: true,
+      schema: {
+      $ref: "#/components/schemas/CreateBannerRequest"
+    }
+   }
+  */
+);
+router.get(
+  "/banners",
+  bannerController.findAll
+  /**
+    #swagger.tags = ['Banners']
+  */
+);
+router.get(
+  "/banners/:id",
+  bannerController.findOne
+  /**
+    #swagger.tags = ['Banners']
+  */
+);
+router.put(
+  "/banners/:id",
+  [authMiddleware, aclMiddleware([ROLES.ADMIN])],
+  bannerController.update
+  /**
+    #swagger.tags = ['Banners']
+    #swagger.security = [{
+      "bearerAuth": []
+    }]
+    #swagger.requestBody = {
+      required: true,
+      schema: {
+        $ref: "#/components/schemas/CreateBannerRequest"
+      }
+    }
+  */
+);
+router.delete(
+  "/banners/:id",
+  [authMiddleware, aclMiddleware([ROLES.ADMIN])],
+  bannerController.remove
+  /**
+    #swagger.tags = ['Banners']
+    #swagger.security = [{
+      "bearerAuth": []
+    }]
   */
 );
 
