@@ -1,4 +1,4 @@
-import { FilterQuery } from "mongoose";
+import { FilterQuery, isValidObjectId } from "mongoose";
 import { Response } from "express";
 import { IPaginationQuery, IReqUser } from "../utils/interfaces";
 import response from "../utils/response";
@@ -53,7 +53,21 @@ export default {
   async findOne(req: IReqUser, res: Response) {
     try {
       const { id } = req.params;
+      if (!isValidObjectId(id)) {
+        return response.notFound(
+          res,
+          "Failed to get one banner. Id is not valid"
+        );
+      }
+
       const result = await BannerModel.findById(id);
+      if (!result) {
+        return response.notFound(
+          res,
+          "Failed to get one banner. Banner is not found"
+        );
+      }
+
       response.success(res, result, "Success to find one banner");
     } catch (error) {
       response.error(res, error, "Failed to find one banner");
@@ -63,6 +77,13 @@ export default {
   async update(req: IReqUser, res: Response) {
     try {
       const { id } = req.params;
+      if (!isValidObjectId(id)) {
+        return response.notFound(
+          res,
+          "Failed to update banner. Id is not valid"
+        );
+      }
+
       const result = await BannerModel.findByIdAndUpdate(id, req.body, {
         new: true,
       });
@@ -75,6 +96,13 @@ export default {
   async remove(req: IReqUser, res: Response) {
     try {
       const { id } = req.params;
+      if (!isValidObjectId(id)) {
+        return response.notFound(
+          res,
+          "Failed to remove banner. Id is not valid"
+        );
+      }
+
       const result = await BannerModel.findByIdAndDelete(id, { new: true });
       response.success(res, result, "Success to remove banner");
     } catch (error) {

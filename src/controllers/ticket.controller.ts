@@ -2,7 +2,7 @@ import { Response } from "express";
 import response from "../utils/response";
 import TicketModel, { ticketDAO, TTicket } from "../models/ticket.model";
 import { IPaginationQuery, IReqUser } from "../utils/interfaces";
-import { FilterQuery } from "mongoose";
+import { FilterQuery, isValidObjectId } from "mongoose";
 
 export default {
   async create(req: IReqUser, res: Response) {
@@ -56,7 +56,20 @@ export default {
   async findOne(req: IReqUser, res: Response) {
     try {
       const { id } = req.params;
+      if (!isValidObjectId(id)) {
+        return response.notFound(
+          res,
+          "Failed to get one ticket. Id is not valid"
+        );
+      }
+
       const result = await TicketModel.findById(id);
+      if (!result) {
+        return response.notFound(
+          res,
+          "Failed to get one ticket. Ticket is not found"
+        );
+      }
       response.success(res, result, "Success to get one ticket");
     } catch (error) {
       response.error(res, error, "Failed to get one ticket");
@@ -66,6 +79,13 @@ export default {
   async update(req: IReqUser, res: Response) {
     try {
       const { id } = req.params;
+      if (!isValidObjectId(id)) {
+        return response.notFound(
+          res,
+          "Failed to update ticket. Id is not valid"
+        );
+      }
+
       const result = await TicketModel.findByIdAndUpdate(id, req.body, {
         new: true,
       });
@@ -78,6 +98,13 @@ export default {
   async remove(req: IReqUser, res: Response) {
     try {
       const { id } = req.params;
+      if (!isValidObjectId(id)) {
+        return response.notFound(
+          res,
+          "Failed to remove ticket. Id is not valid"
+        );
+      }
+
       const result = await TicketModel.findByIdAndDelete(id, { new: true });
       response.success(res, result, "Success to remove ticket");
     } catch (error) {
@@ -88,7 +115,20 @@ export default {
   async findOneByEvent(req: IReqUser, res: Response) {
     try {
       const { event } = req.params;
+      if (!isValidObjectId(event)) {
+        return response.notFound(
+          res,
+          "Failed to get one ticket by event. Id is not valid"
+        );
+      }
       const result = await TicketModel.findOne({ event });
+      if (!result) {
+        return response.notFound(
+          res,
+          "Failed to get one ticket by event. Ticket is not found"
+        );
+      }
+
       response.success(res, result, "Success to get one ticket");
     } catch (error) {
       response.error(res, error, "Failed to get one ticket");

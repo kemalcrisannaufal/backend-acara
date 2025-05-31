@@ -2,7 +2,7 @@ import { IPaginationQuery, IReqUser } from "../utils/interfaces";
 import { Response } from "express";
 import CategoryModel, { categoryDAO } from "../models/category.model";
 import response from "../utils/response";
-import { FilterQuery } from "mongoose";
+import { FilterQuery, isValidObjectId } from "mongoose";
 
 export default {
   async create(req: IReqUser, res: Response) {
@@ -52,7 +52,21 @@ export default {
   async findOne(req: IReqUser, res: Response) {
     try {
       const { id } = req.params;
+      if (!isValidObjectId(id)) {
+        return response.notFound(
+          res,
+          "Failed to get one category. Id is not valid"
+        );
+      }
+
       const result = await CategoryModel.findById(id);
+      if (!result) {
+        return response.notFound(
+          res,
+          "Failed to get one category. Category is not found"
+        );
+      }
+
       response.success(res, result, "Success get one category");
     } catch (error) {
       response.error(res, error, "Failed get one category");
@@ -61,6 +75,13 @@ export default {
   async update(req: IReqUser, res: Response) {
     try {
       const { id } = req.params;
+      if (!isValidObjectId(id)) {
+        return response.notFound(
+          res,
+          "Failed to update category. Id is not valid"
+        );
+      }
+
       const result = await CategoryModel.findByIdAndUpdate(id, req.body, {
         new: true,
       });
@@ -72,6 +93,13 @@ export default {
   async remove(req: IReqUser, res: Response) {
     try {
       const { id } = req.params;
+      if (!isValidObjectId(id)) {
+        return response.notFound(
+          res,
+          "Failed to remove category. Id is not valid"
+        );
+      }
+
       const result = await CategoryModel.findByIdAndDelete(id, {
         new: true,
       });
