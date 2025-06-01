@@ -17,29 +17,32 @@ export interface Ticket extends Omit<TTicket, "event"> {
   event: ObjectId;
 }
 
-const TicketShema = new Schema<Ticket>({
-  price: {
-    type: Schema.Types.Number,
-    required: true,
+const TicketShema = new Schema<Ticket>(
+  {
+    price: {
+      type: Schema.Types.Number,
+      required: true,
+    },
+    name: {
+      type: Schema.Types.String,
+      required: true,
+    },
+    event: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "Event",
+    },
+    description: {
+      type: Schema.Types.String,
+      required: true,
+    },
+    quantity: {
+      type: Schema.Types.Number,
+      required: true,
+    },
   },
-  name: {
-    type: Schema.Types.String,
-    required: true,
-  },
-  event: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: "Event",
-  },
-  description: {
-    type: Schema.Types.String,
-    required: true,
-  },
-  quantity: {
-    type: Schema.Types.Number,
-    required: true,
-  },
-}).index({ name: "text" });
+  { timestamps: true }
+).index({ name: "text" });
 
 const TicketModel = mongoose.model("Ticket", TicketShema);
 export default TicketModel;
