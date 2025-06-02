@@ -247,6 +247,33 @@ router.get(
   eventController.findAll
   /**
     #swagger.tags = ['Events']
+    #swagger.parameters['limit'] = {
+      in: "query",
+      type: "number",
+      default: 10
+    }
+    #swagger.parameters['page'] = {
+      in: "query",
+      type: "number",
+      default: 1
+    }
+    #swagger.parameters['category'] = {
+      in: "query",
+      type: "string"
+    }
+    #swagger.parameters['isOnline'] = {
+      in: "query",
+      type: "boolean"
+    }
+    #swagger.parameters['isPublish'] = {
+      in: "query",
+      type: "boolean"
+    }
+    #swagger.parameters['isFeatured'] = {
+      in: "query",
+      type: "boolean"
+    }
+
   */
 );
 router.get(
