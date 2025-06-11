@@ -3,13 +3,15 @@ import * as Yup from "yup";
 
 const Schema = mongoose.Schema;
 
-export const bannerDAO = Yup.object().shape({
+export const BANNER_MODEL_NAME = "Banner";
+
+export const bannerDTO = Yup.object().shape({
   title: Yup.string().required(),
   image: Yup.string().required(),
   isShow: Yup.boolean(),
 });
 
-export type Banner = Yup.InferType<typeof bannerDAO>;
+export type Banner = Yup.InferType<typeof bannerDTO>;
 
 const BannerSchema = new Schema<Banner>(
   {
@@ -31,5 +33,5 @@ const BannerSchema = new Schema<Banner>(
   }
 );
 
-const BannerModel = mongoose.model("Banner", BannerSchema);
+const BannerModel = mongoose.model(BANNER_MODEL_NAME, BannerSchema);
 export default BannerModel;

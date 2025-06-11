@@ -3,7 +3,9 @@ import mongoose, { ObjectId } from "mongoose";
 
 const Schema = mongoose.Schema;
 
-export const ticketDAO = yup.object().shape({
+export const TICKET_MODEL_NAME = "Ticket";
+
+export const ticketDTO = yup.object().shape({
   price: yup.number().required(),
   name: yup.string().required(),
   event: yup.string().required(),
@@ -11,7 +13,7 @@ export const ticketDAO = yup.object().shape({
   quantity: yup.number().required(),
 });
 
-export type TTicket = yup.InferType<typeof ticketDAO>;
+export type TTicket = yup.InferType<typeof ticketDTO>;
 
 export interface Ticket extends Omit<TTicket, "event"> {
   event: ObjectId;
@@ -44,5 +46,5 @@ const TicketShema = new Schema<Ticket>(
   { timestamps: true }
 ).index({ name: "text" });
 
-const TicketModel = mongoose.model("Ticket", TicketShema);
+const TicketModel = mongoose.model(TICKET_MODEL_NAME, TicketShema);
 export default TicketModel;

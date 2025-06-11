@@ -1,14 +1,14 @@
 import { Response } from "express";
 import { IPaginationQuery, IReqUser } from "../utils/interfaces";
 import response from "../utils/response";
-import EventModel, { eventDAO, TEvent } from "../models/event.model";
+import EventModel, { eventDTO, TypeEvent } from "../models/event.model";
 import { FilterQuery, isValidObjectId } from "mongoose";
 
 export default {
   async create(req: IReqUser, res: Response) {
     try {
-      const payload = { ...req.body, user: req.user?.id } as TEvent;
-      await eventDAO.validate(payload);
+      const payload = { ...req.body, user: req.user?.id } as TypeEvent;
+      await eventDTO.validate(payload);
       const result = await EventModel.create(payload);
       response.success(res, result, "Success to create an event");
     } catch (error) {
@@ -18,7 +18,7 @@ export default {
   async findAll(req: IReqUser, res: Response) {
     try {
       const buildQuery = (filter: any) => {
-        let query: FilterQuery<TEvent> = {};
+        let query: FilterQuery<TypeEvent> = {};
 
         if (filter.search) {
           query.$text = { $search: filter.search };
@@ -64,6 +64,7 @@ export default {
         .limit(+limit)
         .skip((+page - 1) * +limit)
         .sort({ createdAt: -1 })
+        .lean()
         .exec();
 
       const count = await EventModel.countDocuments(query);

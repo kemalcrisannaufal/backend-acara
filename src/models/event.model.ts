@@ -3,7 +3,9 @@ import * as Yup from "yup";
 
 const Schema = mongoose.Schema;
 
-export const eventDAO = Yup.object({
+export const EVENT_MODEL_NAME = "Event";
+
+export const eventDTO = Yup.object({
   name: Yup.string().required(),
   startDate: Yup.string().required(),
   endDate: Yup.string().required(),
@@ -24,9 +26,9 @@ export const eventDAO = Yup.object({
   }).required(),
 });
 
-export type TEvent = Yup.InferType<typeof eventDAO>;
+export type TypeEvent = Yup.InferType<typeof eventDTO>;
 
-export interface Event extends Omit<TEvent, "category" | "createdBy"> {
+export interface Event extends Omit<TypeEvent, "category" | "createdBy"> {
   category: ObjectId;
   createdBy: ObjectId;
 }
@@ -111,5 +113,5 @@ EventSchema.pre("save", function () {
   }
 });
 
-const EventModel = mongoose.model("Event", EventSchema);
+const EventModel = mongoose.model(EVENT_MODEL_NAME, EventSchema);
 export default EventModel;

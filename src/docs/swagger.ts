@@ -61,7 +61,7 @@ const doc = {
         category: "",
         createdBy: "",
         location: {
-          region: "region id",
+          region: 3273,
           coordinates: [0, 0],
           address: "",
         },
@@ -75,6 +75,11 @@ const doc = {
       },
       CreateMediaRequest: {
         fileUrl: "",
+      },
+      CreateOrderRequest: {
+        events: "",
+        ticket: "",
+        quantity: 1,
       },
     },
   },

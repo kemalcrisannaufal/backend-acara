@@ -2,12 +2,12 @@ import { FilterQuery, isValidObjectId } from "mongoose";
 import { Response } from "express";
 import { IPaginationQuery, IReqUser } from "../utils/interfaces";
 import response from "../utils/response";
-import BannerModel, { Banner, bannerDAO } from "../models/banner.model";
+import BannerModel, { Banner, bannerDTO } from "../models/banner.model";
 
 export default {
   async create(req: IReqUser, res: Response) {
     try {
-      await bannerDAO.validate(req.body);
+      await bannerDTO.validate(req.body);
       const result = await BannerModel.create(req.body);
       response.success(res, result, "Success to create banner");
     } catch (error) {

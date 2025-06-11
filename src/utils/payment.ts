@@ -3,7 +3,7 @@ import { MIDTRANS_SERVER_KEY, MIDTRANS_TRANSACTION_URL } from "./env";
 
 export interface Payment {
   transaction_details: {
-    odrder_id: string;
+    order_id: string;
     gross_amount: number;
   };
 }
